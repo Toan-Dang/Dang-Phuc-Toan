@@ -4,14 +4,19 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
-import routerAuth from "./routes/auth.route";
-import routerUser from "./routes/users.route";
-import serverless from 'serverless-http';
-
+import authRoute from "./module/auth/auth.routes";
+import { typeOrmConfig } from "./config/postgres";
 dotenv.config();
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Ddos = require("dddos");
 
+typeOrmConfig.initialize()
+  .then(() => {
+    console.log("Data Source has been initialized!")
+  })
+  .catch((err) => {
+      console.error("Error during Data Source initialization:", err)
+  })
 // config express
 const app: Express = express();
 app.use(cors());
@@ -43,8 +48,9 @@ app.use(
 );
 
 // specific route
-app.use(routerAuth);
-app.use(routerUser);
+app.use(authRoute);
+// app.use(contentRoute);
+// app.use(profileRoute);
 // UnKnown Routes
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
   const err = new Error(`Route ${req.originalUrl} not found`) as any;
@@ -64,6 +70,8 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     is_show_message: err.isShowMessage,
   });
 });
-// uncomment to test local
-export default app;
-export const handler = serverless(app);
+
+const port = process.env.PORT || 5001;
+app.listen(port, () => {
+  console.log(`listening on port ${port}`);
+});
