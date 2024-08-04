@@ -20,24 +20,16 @@ graph TD;
     classDef default fill:#ffebcd,stroke:#333,stroke-width:2px;
     class User,Web_Browser,API_Gateway,Lambda_Update_Score,Cognito,DynamoDB,CloudWatch,WAF,WebSocket_Client,Live_Scoreboard default;
     
-    User(User) 
-    Web_Browser(Web Browser) 
-    API_Gateway(AWS API Gateway
-(HTTP & WebSocket))
-    Lambda_Update_Score(AWS Lambda
-(Update Score))
-    Cognito(AWS Cognito
-(Authentication))
-    DynamoDB(AWS DynamoDB
-(UserScores Table))
-    CloudWatch(AWS CloudWatch
-(Monitoring & Logs))
-    WAF(AWS WAF
-(Security))
-    WebSocket_Client(WebSocket
-(Client))
-    Live_Scoreboard(Live Scoreboard
-(Frontend))
+    User[User] 
+    Web_Browser[Web Browser] 
+    API_Gateway[AWS API Gateway - HTTP & WebSocket]
+    Lambda_Update_Score[AWS Lambda - Update Score]
+    Cognito[AWS Cognito - Authentication]
+    DynamoDB[AWS DynamoDB - UserScores Table]
+    CloudWatch[AWS CloudWatch - Monitoring & Logs]
+    WAF[AWS WAF - Security]
+    WebSocket_Client[WebSocket Client]
+    Live_Scoreboard[Live Scoreboard - Frontend]
 ```
 
 ## Elements
