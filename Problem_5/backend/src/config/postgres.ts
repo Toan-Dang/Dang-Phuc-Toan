@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { User } from '../entity/User';
 import { UserLogin } from '../entity/UserLogin';
 import { UserToken } from '../entity/UserToken';
+import { Resource } from '../entity/Resource';
 import { DataSource } from 'typeorm';
 import config from "./config";
 import { Pool } from 'pg';
@@ -18,7 +19,8 @@ const typeOrmConfig = new DataSource ({
   entities: [
     User,
     UserLogin,
-    UserToken
+    UserToken,
+    Resource
   ]
 });
 
@@ -30,8 +32,10 @@ const pool = new Pool({
   port: 5432,
 });
 const userRepository = typeOrmConfig.getRepository(User);
+const resourceRepository = typeOrmConfig.getRepository(Resource);
 export {
   pool,
   typeOrmConfig,
   userRepository,
+  resourceRepository,
 }

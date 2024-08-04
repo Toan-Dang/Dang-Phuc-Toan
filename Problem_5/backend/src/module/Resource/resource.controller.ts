@@ -11,8 +11,8 @@ export async function createResource(
     console.info(
       `>> [resource] createResource data ${JSON.stringify(req.body)}`
     );
-    await service.createAccount(req);
-    return ResponseSuccess(res);
+    const result = await service.createResource(req.body);
+    return ResponseSuccess(res, result);
   } catch (error: any) {
     return next(error);
   }
@@ -25,10 +25,12 @@ export async function getAllResource(
 ) {
   try {
     console.info(
-      `>> [resource] createResource data ${JSON.stringify(req.body)}`
+      `>> [resource] getAllResource`
     );
-    await service.createAccount(req);
-    return ResponseSuccess(res);
+    const result = await service.getAllResource();
+    console.log("resutl", result);
+    
+    return ResponseSuccess(res, result);
   } catch (error: any) {
     return next(error);
   }
@@ -40,10 +42,27 @@ export async function getDetailResource(
 ) {
   try {
     console.info(
-      `>> [resource] createResource data ${JSON.stringify(req.body)}`
+      `>> [resource] getDetailResource params ${JSON.stringify(req.params)}`
     );
-    await service.createAccount(req);
-    return ResponseSuccess(res);
+    const { id } = req.params;
+    const result = await service.getDetailResource(parseInt(id));
+    return ResponseSuccess(res, result);
+  } catch (error: any) {
+    return next(error);
+  }
+}
+export async function filterResource(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    console.info(
+      `>> [resource] filterResource query ${JSON.stringify(req.query)}`
+    );
+    const { name } = req.query;
+    const result = await service.filterResource(name as string);
+    return ResponseSuccess(res, result);
   } catch (error: any) {
     return next(error);
   }
@@ -55,9 +74,10 @@ export async function updateResource(
 ) {
   try {
     console.info(
-      `>> [resource] createResource data ${JSON.stringify(req.body)}`
+      `>> [resource] updateResource data ${JSON.stringify(req.body)}`
     );
-    await service.createAccount(req);
+    const {id, name, description} = req.body
+    await service.updateResource(id, name, description);
     return ResponseSuccess(res);
   } catch (error: any) {
     return next(error);
@@ -70,9 +90,10 @@ export async function deleteResource(
 ) {
   try {
     console.info(
-      `>> [resource] createResource data ${JSON.stringify(req.body)}`
+      `>> [resource] deleteResource data ${JSON.stringify(req.body)}`
     );
-    await service.createAccount(req);
+    const {id} = req.body
+    await service.deleteResource(parseInt(id));
     return ResponseSuccess(res);
   } catch (error: any) {
     return next(error);

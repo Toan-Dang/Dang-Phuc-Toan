@@ -13,9 +13,9 @@ export async function login(req: Request) {
   const user = await repo.findAccountByUsername(username);
   console.log(user);
   
-  // check exists email
+  // check exists username
   if (!user) {
-    throw new AppError("email exist", 400);
+    throw new AppError("username not exist", 400);
   }
 
   // check exists password

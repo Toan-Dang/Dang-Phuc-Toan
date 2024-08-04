@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import authRoute from "./module/auth/auth.routes";
+import resourceRoute from "./module/Resource/resource.routes";
 import { typeOrmConfig } from "./config/postgres";
 dotenv.config();
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -49,8 +50,7 @@ app.use(
 
 // specific route
 app.use(authRoute);
-// app.use(contentRoute);
-// app.use(profileRoute);
+app.use(resourceRoute);
 // UnKnown Routes
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
   const err = new Error(`Route ${req.originalUrl} not found`) as any;
@@ -75,3 +75,5 @@ const port = process.env.PORT || 5001;
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
+
+export default app;

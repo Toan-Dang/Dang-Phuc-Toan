@@ -19,8 +19,8 @@ export class User {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at!: Date;
 
-  @OneToMany(() => Resource, resource => resource.user)
-  resources!: Resource[];
+  // @OneToMany(() => Resource, (resource) => resource.user)
+  // resources!: Resource[];
 
   @OneToMany(() => UserLogin, (userLogin) => userLogin.user)
   logins!: UserLogin[];
